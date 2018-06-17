@@ -1,0 +1,202 @@
+Prefix(:=<http://www.semanticweb.org/admin/ontologies/2018/5/symphonic-metal-ontology-4#>)
+Prefix(owl:=<http://www.w3.org/2002/07/owl#>)
+Prefix(rdf:=<http://www.w3.org/1999/02/22-rdf-syntax-ns#>)
+Prefix(xml:=<http://www.w3.org/XML/1998/namespace>)
+Prefix(xsd:=<http://www.w3.org/2001/XMLSchema#>)
+Prefix(rdfs:=<http://www.w3.org/2000/01/rdf-schema#>)
+
+
+Ontology(<http://www.semanticweb.org/admin/ontologies/2018/5/symphonic-metal-ontology-4>
+
+Declaration(Class(:Album))
+Declaration(Class(:Artist))
+Declaration(Class(:Band))
+Declaration(Class(:ConceptAlbum))
+Declaration(Class(:Country))
+Declaration(Class(:Duration))
+Declaration(Class(:Genre))
+Declaration(Class(:Growler))
+Declaration(Class(:Instrument))
+Declaration(Class(:Label))
+Declaration(Class(:Musician))
+Declaration(Class(:Price))
+Declaration(Class(:Record))
+Declaration(Class(:RockOpera))
+Declaration(Class(:Singer))
+Declaration(Class(:SoloArtist))
+Declaration(Class(:Song))
+Declaration(Class(:SubGenre))
+Declaration(Class(<https://www.w3.org/2001/XMLSchema#date>))
+Declaration(ObjectProperty(:containsSong))
+Declaration(ObjectProperty(:hasDuration))
+Declaration(ObjectProperty(:hasEndDate))
+Declaration(ObjectProperty(:hasMember))
+Declaration(ObjectProperty(:hasOrigin))
+Declaration(ObjectProperty(:hasPrice))
+Declaration(ObjectProperty(:hasReleaseDate))
+Declaration(ObjectProperty(:hasStartDate))
+Declaration(ObjectProperty(:isFeaturedOn))
+Declaration(ObjectProperty(:isMemberOf))
+Declaration(ObjectProperty(:plays))
+Declaration(DataProperty(:hasName))
+Declaration(NamedIndividual(:Metal))
+Declaration(NamedIndividual(:Symphonic_Metal))
+
+############################
+#   Object Properties
+############################
+
+# Object Property: :containsSong (:containsSong)
+
+SubObjectPropertyOf(:containsSong owl:topObjectProperty)
+InverseObjectProperties(:containsSong :isFeaturedOn)
+
+# Object Property: :hasDuration (:hasDuration)
+
+SubObjectPropertyOf(:hasDuration owl:topObjectProperty)
+ObjectPropertyDomain(:hasDuration :Record)
+ObjectPropertyRange(:hasDuration :Duration)
+
+# Object Property: :hasEndDate (:hasEndDate)
+
+FunctionalObjectProperty(:hasEndDate)
+ObjectPropertyDomain(:hasEndDate :Artist)
+ObjectPropertyRange(:hasEndDate <https://www.w3.org/2001/XMLSchema#date>)
+
+# Object Property: :hasMember (:hasMember)
+
+SubObjectPropertyOf(:hasMember owl:topObjectProperty)
+InverseObjectProperties(:hasMember :isMemberOf)
+ObjectPropertyDomain(:hasMember :Artist)
+ObjectPropertyRange(:hasMember :Musician)
+
+# Object Property: :hasOrigin (:hasOrigin)
+
+ObjectPropertyDomain(:hasOrigin ObjectUnionOf(:Artist :Genre :Musician))
+
+# Object Property: :hasPrice (:hasPrice)
+
+ObjectPropertyDomain(:hasPrice :Record)
+ObjectPropertyRange(:hasPrice :Price)
+
+# Object Property: :hasReleaseDate (:hasReleaseDate)
+
+FunctionalObjectProperty(:hasReleaseDate)
+ObjectPropertyDomain(:hasReleaseDate :Record)
+ObjectPropertyRange(:hasReleaseDate <https://www.w3.org/2001/XMLSchema#date>)
+
+# Object Property: :hasStartDate (:hasStartDate)
+
+FunctionalObjectProperty(:hasStartDate)
+ObjectPropertyDomain(:hasStartDate :Artist)
+ObjectPropertyRange(:hasStartDate <https://www.w3.org/2001/XMLSchema#date>)
+
+# Object Property: :isFeaturedOn (:isFeaturedOn)
+
+SubObjectPropertyOf(:isFeaturedOn owl:topObjectProperty)
+ObjectPropertyDomain(:isFeaturedOn :Song)
+ObjectPropertyRange(:isFeaturedOn :Album)
+
+# Object Property: :isMemberOf (:isMemberOf)
+
+SubObjectPropertyOf(:isMemberOf owl:topObjectProperty)
+ObjectPropertyDomain(:isMemberOf :Musician)
+ObjectPropertyRange(:isMemberOf :Artist)
+
+# Object Property: :plays (:plays)
+
+ObjectPropertyDomain(:plays :Musician)
+ObjectPropertyRange(:plays :Instrument)
+
+
+############################
+#   Data Properties
+############################
+
+# Data Property: :hasName (:hasName)
+
+FunctionalDataProperty(:hasName)
+DataPropertyDomain(:hasName ObjectUnionOf(:Artist :Musician :Record))
+DataPropertyRange(:hasName xsd:string)
+
+
+
+############################
+#   Classes
+############################
+
+# Class: :Album (:Album)
+
+SubClassOf(:Album :Record)
+SubClassOf(Annotation(rdfs:comment "Each album must contain a song") :Album ObjectSomeValuesFrom(:containsSong :Song))
+
+# Class: :Artist (:Artist)
+
+
+# Class: :Band (:Band)
+
+SubClassOf(:Band :Artist)
+SubClassOf(:Band ObjectSomeValuesFrom(:hasMember :Musician))
+
+# Class: :ConceptAlbum (:ConceptAlbum)
+
+SubClassOf(:ConceptAlbum :Album)
+
+# Class: :Genre (:Genre)
+
+
+# Class: :Growler (:Growler)
+
+SubClassOf(:Growler :Singer)
+
+# Class: :Instrument (:Instrument)
+
+
+# Class: :Label (:Label)
+
+
+# Class: :Musician (:Musician)
+
+
+# Class: :Record (:Record)
+
+
+# Class: :RockOpera (:RockOpera)
+
+SubClassOf(:RockOpera :Album)
+
+# Class: :Singer (:Singer)
+
+SubClassOf(:Singer :Musician)
+
+# Class: :SoloArtist (:SoloArtist)
+
+SubClassOf(:SoloArtist :Artist)
+
+# Class: :Song (:Song)
+
+SubClassOf(:Song :Record)
+
+# Class: :SubGenre (:SubGenre)
+
+SubClassOf(:SubGenre :Genre)
+
+# Class: <https://www.w3.org/2001/XMLSchema#date> (<https://www.w3.org/2001/XMLSchema#date>)
+
+
+
+############################
+#   Named Individuals
+############################
+
+# Individual: :Metal (:Metal)
+
+ClassAssertion(:Genre :Metal)
+
+# Individual: :Symphonic_Metal (:Symphonic_Metal)
+
+ClassAssertion(:SubGenre :Symphonic_Metal)
+
+
+DisjointClasses(:Artist :Genre :Instrument :Label :Musician :Record <https://www.w3.org/2001/XMLSchema#date>)
+)
