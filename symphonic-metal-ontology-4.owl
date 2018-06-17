@@ -13,55 +13,123 @@ Declaration(Class(:Artist))
 Declaration(Class(:Band))
 Declaration(Class(:ConceptAlbum))
 Declaration(Class(:Country))
-Declaration(Class(:Duration))
+Declaration(Class(:Customer))
+Declaration(Class(:EP))
 Declaration(Class(:Genre))
 Declaration(Class(:Growler))
 Declaration(Class(:Instrument))
 Declaration(Class(:Label))
+Declaration(Class(:Lead_Singer))
+Declaration(Class(:Monthly_Subscription))
 Declaration(Class(:Musician))
 Declaration(Class(:Price))
 Declaration(Class(:Record))
-Declaration(Class(:RockOpera))
+Declaration(Class(:Review))
 Declaration(Class(:Singer))
 Declaration(Class(:SoloArtist))
 Declaration(Class(:Song))
+Declaration(Class(:SongWriter))
 Declaration(Class(:SubGenre))
-Declaration(Class(<https://www.w3.org/2001/XMLSchema#date>))
+Declaration(Class(:Subscription))
+Declaration(Class(:Yearly_Subscription))
+Declaration(ObjectProperty(:activeMember))
 Declaration(ObjectProperty(:containsSong))
-Declaration(ObjectProperty(:hasDuration))
-Declaration(ObjectProperty(:hasEndDate))
+Declaration(ObjectProperty(:hasGenre))
+Declaration(ObjectProperty(:hasLabel))
+Declaration(ObjectProperty(:hasListenedTo))
 Declaration(ObjectProperty(:hasMember))
 Declaration(ObjectProperty(:hasOrigin))
 Declaration(ObjectProperty(:hasPrice))
-Declaration(ObjectProperty(:hasReleaseDate))
-Declaration(ObjectProperty(:hasStartDate))
+Declaration(ObjectProperty(:isActiveMember))
 Declaration(ObjectProperty(:isFeaturedOn))
+Declaration(ObjectProperty(:isMadeBy))
 Declaration(ObjectProperty(:isMemberOf))
+Declaration(ObjectProperty(:isPreviousMember))
+Declaration(ObjectProperty(:isSubGenreOf))
 Declaration(ObjectProperty(:plays))
+Declaration(ObjectProperty(:previousMember))
+Declaration(ObjectProperty(:writtenBy))
+Declaration(DataProperty(:hasCurrency))
+Declaration(DataProperty(:hasDuration))
+Declaration(DataProperty(:hasEndDate))
+Declaration(DataProperty(:hasGender))
 Declaration(DataProperty(:hasName))
+Declaration(DataProperty(:hasRating))
+Declaration(DataProperty(:hasReleaseDate))
+Declaration(DataProperty(:hasStartDate))
+Declaration(DataProperty(:hasText))
+Declaration(DataProperty(:hasValue))
+Declaration(NamedIndividual(:An))
+Declaration(NamedIndividual(:Anette_Olzon))
+Declaration(NamedIndividual(:Bass_Guitar))
+Declaration(NamedIndividual(:Cello))
+Declaration(NamedIndividual(:Epica))
+Declaration(NamedIndividual(:Erno_Vuorinen))
+Declaration(NamedIndividual(:Finland))
+Declaration(NamedIndividual(:Floor_Jansen))
+Declaration(NamedIndividual(:Guitar))
+Declaration(NamedIndividual(:Imaginaerum))
+Declaration(NamedIndividual(:Keyboard))
+Declaration(NamedIndividual(:Marco_Hietala))
+Declaration(NamedIndividual(:Mark_Jansen))
 Declaration(NamedIndividual(:Metal))
+Declaration(NamedIndividual(:Nemo))
+Declaration(NamedIndividual(:Netherlands))
+Declaration(NamedIndividual(:Nightwish))
+Declaration(NamedIndividual(:Nuclear_Blast))
+Declaration(NamedIndividual(:Once))
+Declaration(NamedIndividual(:ReviewForOnce))
+Declaration(NamedIndividual(:Roadrunner_Records))
+Declaration(NamedIndividual(:Spinefarm_Records))
+Declaration(NamedIndividual(:Storytime))
+Declaration(NamedIndividual(:Symphonic_Death_Metal))
+Declaration(NamedIndividual(:Symphonic_Gothic_Metal))
 Declaration(NamedIndividual(:Symphonic_Metal))
+Declaration(NamedIndividual(:Symphonic_Power_Metal))
+Declaration(NamedIndividual(:Tarja_Turunen))
+Declaration(NamedIndividual(:Therion))
+Declaration(NamedIndividual(:Troy_Donockley))
+Declaration(NamedIndividual(:Tuomas_Holopainen))
+Declaration(NamedIndividual(:Uilleann_pipes))
+Declaration(NamedIndividual(:Violin))
+Declaration(NamedIndividual(:USD))
+Declaration(NamedIndividual(:USD))
+Declaration(NamedIndividual(<http://www.semanticweb.org/admin/ontologies/2018/5/symphonic-metal-ontology-4#74:56>))
+Declaration(Datatype(xsd:duration))
 
 ############################
 #   Object Properties
 ############################
 
+# Object Property: :activeMember (:activeMember)
+
+SubObjectPropertyOf(:activeMember :hasMember)
+InverseObjectProperties(:activeMember :isActiveMember)
+ObjectPropertyDomain(:activeMember :Artist)
+ObjectPropertyRange(:activeMember :Musician)
+
 # Object Property: :containsSong (:containsSong)
 
 SubObjectPropertyOf(:containsSong owl:topObjectProperty)
 InverseObjectProperties(:containsSong :isFeaturedOn)
+AsymmetricObjectProperty(:containsSong)
+ObjectPropertyDomain(:containsSong :Album)
+ObjectPropertyRange(:containsSong :Song)
 
-# Object Property: :hasDuration (:hasDuration)
+# Object Property: :hasGenre (:hasGenre)
 
-SubObjectPropertyOf(:hasDuration owl:topObjectProperty)
-ObjectPropertyDomain(:hasDuration :Record)
-ObjectPropertyRange(:hasDuration :Duration)
+ObjectPropertyDomain(:hasGenre :Artist)
+ObjectPropertyRange(:hasGenre :Genre)
 
-# Object Property: :hasEndDate (:hasEndDate)
+# Object Property: :hasLabel (:hasLabel)
 
-FunctionalObjectProperty(:hasEndDate)
-ObjectPropertyDomain(:hasEndDate :Artist)
-ObjectPropertyRange(:hasEndDate <https://www.w3.org/2001/XMLSchema#date>)
+FunctionalObjectProperty(:hasLabel)
+ObjectPropertyRange(:hasLabel :Label)
+
+# Object Property: :hasListenedTo (:hasListenedTo)
+
+ObjectPropertyDomain(:hasListenedTo :Customer)
+ObjectPropertyRange(:hasListenedTo ObjectUnionOf(:Artist :Record))
 
 # Object Property: :hasMember (:hasMember)
 
@@ -72,24 +140,20 @@ ObjectPropertyRange(:hasMember :Musician)
 
 # Object Property: :hasOrigin (:hasOrigin)
 
+FunctionalObjectProperty(:hasOrigin)
 ObjectPropertyDomain(:hasOrigin ObjectUnionOf(:Artist :Genre :Musician))
+ObjectPropertyRange(:hasOrigin :Country)
 
 # Object Property: :hasPrice (:hasPrice)
 
-ObjectPropertyDomain(:hasPrice :Record)
+ObjectPropertyDomain(:hasPrice ObjectUnionOf(:Record :Subscription))
 ObjectPropertyRange(:hasPrice :Price)
 
-# Object Property: :hasReleaseDate (:hasReleaseDate)
+# Object Property: :isActiveMember (:isActiveMember)
 
-FunctionalObjectProperty(:hasReleaseDate)
-ObjectPropertyDomain(:hasReleaseDate :Record)
-ObjectPropertyRange(:hasReleaseDate <https://www.w3.org/2001/XMLSchema#date>)
-
-# Object Property: :hasStartDate (:hasStartDate)
-
-FunctionalObjectProperty(:hasStartDate)
-ObjectPropertyDomain(:hasStartDate :Artist)
-ObjectPropertyRange(:hasStartDate <https://www.w3.org/2001/XMLSchema#date>)
+SubObjectPropertyOf(:isActiveMember :isMemberOf)
+ObjectPropertyDomain(:isActiveMember :Musician)
+ObjectPropertyRange(:isActiveMember :Artist)
 
 # Object Property: :isFeaturedOn (:isFeaturedOn)
 
@@ -97,27 +161,113 @@ SubObjectPropertyOf(:isFeaturedOn owl:topObjectProperty)
 ObjectPropertyDomain(:isFeaturedOn :Song)
 ObjectPropertyRange(:isFeaturedOn :Album)
 
+# Object Property: :isMadeBy (:isMadeBy)
+
+SubObjectPropertyOf(:isMadeBy owl:topObjectProperty)
+ObjectPropertyDomain(:isMadeBy :Record)
+ObjectPropertyRange(:isMadeBy :Artist)
+
 # Object Property: :isMemberOf (:isMemberOf)
 
 SubObjectPropertyOf(:isMemberOf owl:topObjectProperty)
 ObjectPropertyDomain(:isMemberOf :Musician)
 ObjectPropertyRange(:isMemberOf :Artist)
 
+# Object Property: :isPreviousMember (:isPreviousMember)
+
+SubObjectPropertyOf(:isPreviousMember :isMemberOf)
+InverseObjectProperties(:isPreviousMember :previousMember)
+ObjectPropertyDomain(:isPreviousMember :Musician)
+ObjectPropertyRange(:isPreviousMember :Artist)
+
+# Object Property: :isSubGenreOf (:isSubGenreOf)
+
+SubObjectPropertyOf(:isSubGenreOf owl:topObjectProperty)
+AsymmetricObjectProperty(:isSubGenreOf)
+ObjectPropertyDomain(:isSubGenreOf :Genre)
+ObjectPropertyRange(:isSubGenreOf :Genre)
+
 # Object Property: :plays (:plays)
 
 ObjectPropertyDomain(:plays :Musician)
 ObjectPropertyRange(:plays :Instrument)
+
+# Object Property: :previousMember (:previousMember)
+
+SubObjectPropertyOf(:previousMember :hasMember)
+ObjectPropertyDomain(:previousMember :Artist)
+ObjectPropertyRange(:previousMember :Musician)
+
+# Object Property: :writtenBy (:writtenBy)
+
+SubObjectPropertyOf(:writtenBy owl:topObjectProperty)
+FunctionalObjectProperty(:writtenBy)
+ObjectPropertyDomain(:writtenBy :Review)
+ObjectPropertyRange(:writtenBy :Customer)
 
 
 ############################
 #   Data Properties
 ############################
 
+# Data Property: :hasCurrency (:hasCurrency)
+
+DataPropertyDomain(:hasCurrency :Price)
+DataPropertyRange(:hasCurrency DatatypeRestriction(xsd:string xsd:pattern "[A-Z]{3}"))
+
+# Data Property: :hasDuration (:hasDuration)
+
+SubDataPropertyOf(:hasDuration owl:topDataProperty)
+DataPropertyDomain(:hasDuration :Record)
+DataPropertyRange(:hasDuration xsd:duration)
+
+# Data Property: :hasEndDate (:hasEndDate)
+
+SubDataPropertyOf(:hasEndDate owl:topDataProperty)
+DataPropertyDomain(:hasEndDate :Artist)
+DataPropertyRange(:hasEndDate DatatypeRestriction(xsd:string xsd:pattern "[0-9]{4}"))
+
+# Data Property: :hasGender (:hasGender)
+
+SubDataPropertyOf(:hasGender owl:topDataProperty)
+DataPropertyDomain(:hasGender :Musician)
+DataPropertyRange(:hasGender DataOneOf("female" "male"))
+
 # Data Property: :hasName (:hasName)
 
 FunctionalDataProperty(:hasName)
 DataPropertyDomain(:hasName ObjectUnionOf(:Artist :Musician :Record))
 DataPropertyRange(:hasName xsd:string)
+
+# Data Property: :hasRating (:hasRating)
+
+SubDataPropertyOf(:hasRating owl:topDataProperty)
+DataPropertyDomain(:hasRating ObjectUnionOf(:Artist :Record :Review))
+DataPropertyRange(:hasRating DataOneOf("0"^^xsd:integer "1"^^xsd:integer "2"^^xsd:integer "3"^^xsd:integer "4"^^xsd:integer "5"^^xsd:integer))
+
+# Data Property: :hasReleaseDate (:hasReleaseDate)
+
+SubDataPropertyOf(:hasReleaseDate owl:topDataProperty)
+DataPropertyDomain(:hasReleaseDate :Record)
+DataPropertyRange(:hasReleaseDate xsd:dateTime)
+
+# Data Property: :hasStartDate (:hasStartDate)
+
+SubDataPropertyOf(:hasStartDate owl:topDataProperty)
+DataPropertyDomain(:hasStartDate :Artist)
+DataPropertyRange(:hasStartDate DatatypeRestriction(xsd:string xsd:pattern "[0-9]{4}"))
+
+# Data Property: :hasText (:hasText)
+
+SubDataPropertyOf(:hasText owl:topDataProperty)
+DataPropertyDomain(:hasText :Review)
+DataPropertyRange(:hasText xsd:string)
+
+# Data Property: :hasValue (:hasValue)
+
+SubDataPropertyOf(:hasValue owl:topDataProperty)
+DataPropertyDomain(:hasValue :Price)
+DataPropertyRange(:hasValue xsd:float)
 
 
 
@@ -130,9 +280,6 @@ DataPropertyRange(:hasName xsd:string)
 SubClassOf(:Album :Record)
 SubClassOf(Annotation(rdfs:comment "Each album must contain a song") :Album ObjectSomeValuesFrom(:containsSong :Song))
 
-# Class: :Artist (:Artist)
-
-
 # Class: :Band (:Band)
 
 SubClassOf(:Band :Artist)
@@ -142,28 +289,21 @@ SubClassOf(:Band ObjectSomeValuesFrom(:hasMember :Musician))
 
 SubClassOf(:ConceptAlbum :Album)
 
-# Class: :Genre (:Genre)
+# Class: :EP (:EP)
 
+SubClassOf(:EP :Album)
 
 # Class: :Growler (:Growler)
 
 SubClassOf(:Growler :Singer)
 
-# Class: :Instrument (:Instrument)
+# Class: :Lead_Singer (:Lead_Singer)
 
+SubClassOf(:Lead_Singer :Singer)
 
-# Class: :Label (:Label)
+# Class: :Monthly_Subscription (:Monthly_Subscription)
 
-
-# Class: :Musician (:Musician)
-
-
-# Class: :Record (:Record)
-
-
-# Class: :RockOpera (:RockOpera)
-
-SubClassOf(:RockOpera :Album)
+SubClassOf(:Monthly_Subscription :Subscription)
 
 # Class: :Singer (:Singer)
 
@@ -177,26 +317,219 @@ SubClassOf(:SoloArtist :Artist)
 
 SubClassOf(:Song :Record)
 
+# Class: :SongWriter (:SongWriter)
+
+SubClassOf(:SongWriter :Musician)
+
 # Class: :SubGenre (:SubGenre)
 
 SubClassOf(:SubGenre :Genre)
 
-# Class: <https://www.w3.org/2001/XMLSchema#date> (<https://www.w3.org/2001/XMLSchema#date>)
+# Class: :Yearly_Subscription (:Yearly_Subscription)
 
+SubClassOf(:Yearly_Subscription :Subscription)
 
 
 ############################
 #   Named Individuals
 ############################
 
+# Individual: :An (:An)
+
+ClassAssertion(:Customer :An)
+
+# Individual: :Anette_Olzon (:Anette_Olzon)
+
+ClassAssertion(:Singer :Anette_Olzon)
+ObjectPropertyAssertion(:previousMember :Anette_Olzon :Nightwish)
+DataPropertyAssertion(:hasGender :Anette_Olzon "female")
+
+# Individual: :Bass_Guitar (:Bass_Guitar)
+
+ClassAssertion(:Instrument :Bass_Guitar)
+
+# Individual: :Cello (:Cello)
+
+ClassAssertion(:Instrument :Cello)
+
+# Individual: :Epica (:Epica)
+
+ClassAssertion(:Band :Epica)
+ObjectPropertyAssertion(:hasGenre :Epica :Symphonic_Death_Metal)
+DataPropertyAssertion(:hasStartDate :Epica "2002"^^xsd:integer)
+
+# Individual: :Erno_Vuorinen (Erno Vuorinen)
+
+AnnotationAssertion(rdfs:label :Erno_Vuorinen "Erno Vuorinen")
+ClassAssertion(:Musician :Erno_Vuorinen)
+ObjectPropertyAssertion(:isActiveMember :Erno_Vuorinen :Nightwish)
+ObjectPropertyAssertion(:plays :Erno_Vuorinen :Guitar)
+DataPropertyAssertion(:hasGender :Erno_Vuorinen "male")
+
+# Individual: :Finland (:Finland)
+
+ClassAssertion(:Country :Finland)
+
+# Individual: :Floor_Jansen (Floor Jansen)
+
+AnnotationAssertion(rdfs:label :Floor_Jansen "Floor Jansen")
+ClassAssertion(:Lead_Singer :Floor_Jansen)
+ObjectPropertyAssertion(:hasOrigin :Floor_Jansen :Netherlands)
+DataPropertyAssertion(:hasGender :Floor_Jansen "female")
+
+# Individual: :Guitar (:Guitar)
+
+ClassAssertion(:Instrument :Guitar)
+
+# Individual: :Imaginaerum (Imaginaerum)
+
+AnnotationAssertion(rdfs:label :Imaginaerum "Imaginaerum")
+ClassAssertion(:ConceptAlbum :Imaginaerum)
+ObjectPropertyAssertion(:isMadeBy :Imaginaerum :Nightwish)
+DataPropertyAssertion(:hasDuration :Imaginaerum "74M56S")
+
+# Individual: :Keyboard (:Keyboard)
+
+ClassAssertion(:Instrument :Keyboard)
+
+# Individual: :Marco_Hietala (:Marco_Hietala)
+
+ClassAssertion(:Singer :Marco_Hietala)
+ObjectPropertyAssertion(:isActiveMember :Marco_Hietala :Nightwish)
+
+# Individual: :Mark_Jansen (:Mark_Jansen)
+
+ClassAssertion(:Growler :Mark_Jansen)
+ObjectPropertyAssertion(:hasOrigin :Mark_Jansen :Netherlands)
+ObjectPropertyAssertion(:isActiveMember :Mark_Jansen :Epica)
+
 # Individual: :Metal (:Metal)
 
 ClassAssertion(:Genre :Metal)
 
+# Individual: :Nemo (:Nemo)
+
+ClassAssertion(:Song :Nemo)
+ObjectPropertyAssertion(:hasLabel :Nemo :Nuclear_Blast)
+ObjectPropertyAssertion(:hasPrice :Nemo :USD)
+ObjectPropertyAssertion(:isFeaturedOn :Nemo :Once)
+DataPropertyAssertion(:hasDuration :Nemo "4M36S")
+
+# Individual: :Netherlands (:Netherlands)
+
+ClassAssertion(:Country :Netherlands)
+
+# Individual: :Nightwish (:Nightwish)
+
+ClassAssertion(:Band :Nightwish)
+ObjectPropertyAssertion(:activeMember :Nightwish :Marco_Hietala)
+ObjectPropertyAssertion(:hasGenre :Nightwish :Symphonic_Power_Metal)
+ObjectPropertyAssertion(:hasOrigin :Nightwish :Finland)
+DataPropertyAssertion(:hasStartDate :Nightwish "1996"^^xsd:integer)
+
+# Individual: :Nuclear_Blast (Nuclear Blast)
+
+AnnotationAssertion(rdfs:label :Nuclear_Blast "Nuclear Blast")
+ClassAssertion(:Label :Nuclear_Blast)
+
+# Individual: :Once (Once)
+
+AnnotationAssertion(rdfs:label :Once "Once")
+ClassAssertion(:Album :Once)
+ObjectPropertyAssertion(:hasPrice :Once :USD)
+ObjectPropertyAssertion(:isMadeBy :Once :Nightwish)
+DataPropertyAssertion(:hasReleaseDate :Once "2004-07-06"^^xsd:dateTime)
+
+# Individual: :ReviewForOnce (:ReviewForOnce)
+
+ClassAssertion(:Review :ReviewForOnce)
+ObjectPropertyAssertion(:writtenBy :ReviewForOnce :An)
+DataPropertyAssertion(:hasRating :ReviewForOnce "4"^^xsd:integer)
+DataPropertyAssertion(:hasText :ReviewForOnce "This is a great album"^^xsd:string)
+
+# Individual: :Roadrunner_Records (:Roadrunner_Records)
+
+ClassAssertion(:Label :Roadrunner_Records)
+
+# Individual: :Spinefarm_Records (:Spinefarm_Records)
+
+ClassAssertion(:Label :Spinefarm_Records)
+
+# Individual: :Storytime (:Storytime)
+
+ClassAssertion(:Song :Storytime)
+ObjectPropertyAssertion(:isFeaturedOn :Storytime :Imaginaerum)
+DataPropertyAssertion(:hasReleaseDate :Storytime "2011-11-09"^^xsd:dateTime)
+
+# Individual: :Symphonic_Death_Metal (:Symphonic_Death_Metal)
+
+ClassAssertion(:SubGenre :Symphonic_Death_Metal)
+ObjectPropertyAssertion(:isSubGenreOf :Symphonic_Death_Metal :Symphonic_Metal)
+
+# Individual: :Symphonic_Gothic_Metal (Symphonic Gothic Metal)
+
+AnnotationAssertion(rdfs:label :Symphonic_Gothic_Metal "Symphonic Gothic Metal")
+ClassAssertion(:SubGenre :Symphonic_Gothic_Metal)
+
 # Individual: :Symphonic_Metal (:Symphonic_Metal)
 
 ClassAssertion(:SubGenre :Symphonic_Metal)
+ObjectPropertyAssertion(:isSubGenreOf :Symphonic_Metal :Metal)
+
+# Individual: :Symphonic_Power_Metal (:Symphonic_Power_Metal)
+
+ClassAssertion(:SubGenre :Symphonic_Power_Metal)
+ObjectPropertyAssertion(:isSubGenreOf :Symphonic_Power_Metal :Symphonic_Metal)
+
+# Individual: :Tarja_Turunen (:Tarja_Turunen)
+
+ClassAssertion(:Singer :Tarja_Turunen)
+ClassAssertion(:SoloArtist :Tarja_Turunen)
+ObjectPropertyAssertion(:activeMember :Tarja_Turunen :Tarja_Turunen)
+ObjectPropertyAssertion(:hasOrigin :Tarja_Turunen :Finland)
+ObjectPropertyAssertion(:previousMember :Tarja_Turunen :Nightwish)
+DataPropertyAssertion(:hasGender :Tarja_Turunen "female")
+
+# Individual: :Therion (:Therion)
+
+ClassAssertion(:Band :Therion)
+ObjectPropertyAssertion(:hasGenre :Therion :Symphonic_Gothic_Metal)
+DataPropertyAssertion(:hasStartDate :Therion "1987"^^xsd:integer)
+
+# Individual: :Troy_Donockley (:Troy_Donockley)
+
+ClassAssertion(:Musician :Troy_Donockley)
+ObjectPropertyAssertion(:activeMember :Troy_Donockley :Nightwish)
+ObjectPropertyAssertion(:plays :Troy_Donockley :Uilleann_pipes)
+
+# Individual: :Tuomas_Holopainen (Tuomas Holopainen)
+
+AnnotationAssertion(rdfs:label :Tuomas_Holopainen "Tuomas Holopainen")
+ClassAssertion(:SongWriter :Tuomas_Holopainen)
+ObjectPropertyAssertion(:isMemberOf :Tuomas_Holopainen :Nightwish)
+DataPropertyAssertion(:hasGender :Tuomas_Holopainen "male")
+
+# Individual: :Uilleann_pipes (:Uilleann_pipes)
+
+ClassAssertion(:Instrument :Uilleann_pipes)
+
+# Individual: :Violin (:Violin)
+
+ClassAssertion(:Instrument :Violin)
+
+# Individual: :USD (:USD)
+
+ClassAssertion(:Price :USD)
+DataPropertyAssertion(:hasCurrency :USD "USD"^^xsd:string)
+DataPropertyAssertion(:hasValue :USD "25.0"^^xsd:float)
+
+# Individual: :USD (:USD)
+
+ClassAssertion(:Price :USD)
+DataPropertyAssertion(:hasCurrency :USD "USD"^^xsd:string)
+DataPropertyAssertion(:hasValue :USD "3.0"^^xsd:float)
 
 
-DisjointClasses(:Artist :Genre :Instrument :Label :Musician :Record <https://www.w3.org/2001/XMLSchema#date>)
+SubObjectPropertyOf(ObjectPropertyChain(:activeMember) :hasMember)
+SubObjectPropertyOf(ObjectPropertyChain(:previousMember) :hasMember)
 )
