@@ -40,6 +40,7 @@ Declaration(ObjectProperty(:hasListenedTo))
 Declaration(ObjectProperty(:hasMember))
 Declaration(ObjectProperty(:hasOrigin))
 Declaration(ObjectProperty(:hasPrice))
+Declaration(ObjectProperty(:hasSubscription))
 Declaration(ObjectProperty(:isActiveMember))
 Declaration(ObjectProperty(:isFeaturedOn))
 Declaration(ObjectProperty(:isMadeBy))
@@ -63,8 +64,10 @@ Declaration(NamedIndividual(:An))
 Declaration(NamedIndividual(:Anette_Olzon))
 Declaration(NamedIndividual(:Bass_Guitar))
 Declaration(NamedIndividual(:Cello))
+Declaration(NamedIndividual(:EUR))
 Declaration(NamedIndividual(:Epica))
 Declaration(NamedIndividual(:Erno_Vuorinen))
+Declaration(NamedIndividual(:FamilySubscription))
 Declaration(NamedIndividual(:Finland))
 Declaration(NamedIndividual(:Floor_Jansen))
 Declaration(NamedIndividual(:Guitar))
@@ -90,12 +93,13 @@ Declaration(NamedIndividual(:Tarja_Turunen))
 Declaration(NamedIndividual(:Therion))
 Declaration(NamedIndividual(:Troy_Donockley))
 Declaration(NamedIndividual(:Tuomas_Holopainen))
+Declaration(NamedIndividual(:USD))
 Declaration(NamedIndividual(:Uilleann_pipes))
 Declaration(NamedIndividual(:Violin))
-Declaration(NamedIndividual(:USD))
-Declaration(NamedIndividual(:USD))
 Declaration(NamedIndividual(<http://www.semanticweb.org/admin/ontologies/2018/5/symphonic-metal-ontology-4#74:56>))
+Declaration(Datatype(xsd:date))
 Declaration(Datatype(xsd:duration))
+Declaration(Datatype(xsd:gYear))
 
 ############################
 #   Object Properties
@@ -123,7 +127,6 @@ ObjectPropertyRange(:hasGenre :Genre)
 
 # Object Property: :hasLabel (:hasLabel)
 
-FunctionalObjectProperty(:hasLabel)
 ObjectPropertyRange(:hasLabel :Label)
 
 # Object Property: :hasListenedTo (:hasListenedTo)
@@ -148,6 +151,10 @@ ObjectPropertyRange(:hasOrigin :Country)
 
 ObjectPropertyDomain(:hasPrice ObjectUnionOf(:Record :Subscription))
 ObjectPropertyRange(:hasPrice :Price)
+
+# Object Property: :hasSubscription (:hasSubscription)
+
+SubObjectPropertyOf(:hasSubscription owl:topObjectProperty)
 
 # Object Property: :isActiveMember (:isActiveMember)
 
@@ -205,6 +212,11 @@ FunctionalObjectProperty(:writtenBy)
 ObjectPropertyDomain(:writtenBy :Review)
 ObjectPropertyRange(:writtenBy :Customer)
 
+# Object Property: owl:topObjectProperty (owl:topObjectProperty)
+
+ObjectPropertyDomain(owl:topObjectProperty :Customer)
+ObjectPropertyRange(owl:topObjectProperty :Subscription)
+
 
 ############################
 #   Data Properties
@@ -225,7 +237,7 @@ DataPropertyRange(:hasDuration xsd:duration)
 
 SubDataPropertyOf(:hasEndDate owl:topDataProperty)
 DataPropertyDomain(:hasEndDate :Artist)
-DataPropertyRange(:hasEndDate DatatypeRestriction(xsd:string xsd:pattern "[0-9]{4}"))
+DataPropertyRange(:hasEndDate xsd:gYear)
 
 # Data Property: :hasGender (:hasGender)
 
@@ -249,13 +261,13 @@ DataPropertyRange(:hasRating DataOneOf("0"^^xsd:integer "1"^^xsd:integer "2"^^xs
 
 SubDataPropertyOf(:hasReleaseDate owl:topDataProperty)
 DataPropertyDomain(:hasReleaseDate :Record)
-DataPropertyRange(:hasReleaseDate xsd:dateTime)
+DataPropertyRange(:hasReleaseDate xsd:date)
 
 # Data Property: :hasStartDate (:hasStartDate)
 
 SubDataPropertyOf(:hasStartDate owl:topDataProperty)
 DataPropertyDomain(:hasStartDate :Artist)
-DataPropertyRange(:hasStartDate DatatypeRestriction(xsd:string xsd:pattern "[0-9]{4}"))
+DataPropertyRange(:hasStartDate xsd:gYear)
 
 # Data Property: :hasText (:hasText)
 
@@ -305,6 +317,10 @@ SubClassOf(:Lead_Singer :Singer)
 
 SubClassOf(:Monthly_Subscription :Subscription)
 
+# Class: :Record (:Record)
+
+EquivalentClasses(:Record ObjectSomeValuesFrom(:hasPrice :Price))
+
 # Class: :Singer (:Singer)
 
 SubClassOf(:Singer :Musician)
@@ -325,6 +341,10 @@ SubClassOf(:SongWriter :Musician)
 
 SubClassOf(:SubGenre :Genre)
 
+# Class: :Subscription (:Subscription)
+
+EquivalentClasses(:Subscription ObjectSomeValuesFrom(:hasPrice :Price))
+
 # Class: :Yearly_Subscription (:Yearly_Subscription)
 
 SubClassOf(:Yearly_Subscription :Subscription)
@@ -337,6 +357,7 @@ SubClassOf(:Yearly_Subscription :Subscription)
 # Individual: :An (:An)
 
 ClassAssertion(:Customer :An)
+ObjectPropertyAssertion(:hasSubscription :An :FamilySubscription)
 
 # Individual: :Anette_Olzon (:Anette_Olzon)
 
@@ -352,6 +373,12 @@ ClassAssertion(:Instrument :Bass_Guitar)
 
 ClassAssertion(:Instrument :Cello)
 
+# Individual: :EUR (:EUR)
+
+ClassAssertion(Annotation(rdfs:label "15EUR") :Price :EUR)
+DataPropertyAssertion(:hasCurrency :EUR "EUR")
+DataPropertyAssertion(:hasValue :EUR "15.0"^^xsd:float)
+
 # Individual: :Epica (:Epica)
 
 ClassAssertion(:Band :Epica)
@@ -365,6 +392,10 @@ ClassAssertion(:Musician :Erno_Vuorinen)
 ObjectPropertyAssertion(:isActiveMember :Erno_Vuorinen :Nightwish)
 ObjectPropertyAssertion(:plays :Erno_Vuorinen :Guitar)
 DataPropertyAssertion(:hasGender :Erno_Vuorinen "male")
+
+# Individual: :FamilySubscription (:FamilySubscription)
+
+ObjectPropertyAssertion(:hasPrice :FamilySubscription :EUR)
 
 # Individual: :Finland (:Finland)
 
@@ -436,9 +467,10 @@ ClassAssertion(:Label :Nuclear_Blast)
 
 AnnotationAssertion(rdfs:label :Once "Once")
 ClassAssertion(:Album :Once)
+ObjectPropertyAssertion(:containsSong :Once :Nemo)
 ObjectPropertyAssertion(:hasPrice :Once :USD)
 ObjectPropertyAssertion(:isMadeBy :Once :Nightwish)
-DataPropertyAssertion(:hasReleaseDate :Once "2004-07-06"^^xsd:dateTime)
+DataPropertyAssertion(:hasReleaseDate :Once "2004-07-06^^xsd:date")
 
 # Individual: :ReviewForOnce (:ReviewForOnce)
 
@@ -459,7 +491,7 @@ ClassAssertion(:Label :Spinefarm_Records)
 
 ClassAssertion(:Song :Storytime)
 ObjectPropertyAssertion(:isFeaturedOn :Storytime :Imaginaerum)
-DataPropertyAssertion(:hasReleaseDate :Storytime "2011-11-09"^^xsd:dateTime)
+DataPropertyAssertion(:hasReleaseDate :Storytime "2011-11-09^^xsd:date")
 
 # Individual: :Symphonic_Death_Metal (:Symphonic_Death_Metal)
 
@@ -509,6 +541,15 @@ ClassAssertion(:SongWriter :Tuomas_Holopainen)
 ObjectPropertyAssertion(:isMemberOf :Tuomas_Holopainen :Nightwish)
 DataPropertyAssertion(:hasGender :Tuomas_Holopainen "male")
 
+# Individual: :USD (:USD)
+
+ClassAssertion(Annotation(rdfs:label "25USD") :Price :USD)
+ClassAssertion(Annotation(rdfs:label "3USD") :Price :USD)
+DataPropertyAssertion(:hasCurrency :USD "USD")
+DataPropertyAssertion(:hasCurrency :USD "USD"^^xsd:string)
+DataPropertyAssertion(:hasValue :USD "25.0"^^xsd:float)
+DataPropertyAssertion(:hasValue :USD "3.0"^^xsd:float)
+
 # Individual: :Uilleann_pipes (:Uilleann_pipes)
 
 ClassAssertion(:Instrument :Uilleann_pipes)
@@ -516,18 +557,6 @@ ClassAssertion(:Instrument :Uilleann_pipes)
 # Individual: :Violin (:Violin)
 
 ClassAssertion(:Instrument :Violin)
-
-# Individual: :USD (:USD)
-
-ClassAssertion(:Price :USD)
-DataPropertyAssertion(:hasCurrency :USD "USD"^^xsd:string)
-DataPropertyAssertion(:hasValue :USD "25.0"^^xsd:float)
-
-# Individual: :USD (:USD)
-
-ClassAssertion(:Price :USD)
-DataPropertyAssertion(:hasCurrency :USD "USD"^^xsd:string)
-DataPropertyAssertion(:hasValue :USD "3.0"^^xsd:float)
 
 
 SubObjectPropertyOf(ObjectPropertyChain(:activeMember) :hasMember)
